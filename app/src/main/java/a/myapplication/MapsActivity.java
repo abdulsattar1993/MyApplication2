@@ -295,4 +295,9 @@ if(location==null){
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+    public void test(){
+
+
+
+    }
 }
