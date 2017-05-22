@@ -15,7 +15,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/button1"
         android:text="@string/go" />
-<fragment
+
+    <Button
+        android:text="Share"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button2" />
+
+    <fragment
     android:id="@+id/map"
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"

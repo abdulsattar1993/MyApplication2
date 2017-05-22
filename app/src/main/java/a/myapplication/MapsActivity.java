@@ -1,6 +1,7 @@
 package a.myapplication;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -8,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -56,6 +58,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         }
         Button btn = (Button) findViewById(R.id.button1);
+        Button btn2 = (Button) findViewById(R.id.button2);
         if (googleServiceAvailable()) {
             Toast.makeText(getApplicationContext(), "Perfect", Toast.LENGTH_LONG).show();
 
@@ -76,6 +79,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
                 }
+            }
+        });
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+//sendEmail();
+                 makeCall();
+
+
             }
         });
     }
@@ -253,6 +266,44 @@ goToLocationZoom(-34,151,0);
 
     LocationRequest mlocationRequest;
 
+    public void makeCall(){
+        Uri number = Uri.parse("tel:03165312534");
+        Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
+        startActivity(callIntent);
+    }
+        public void CalenderTest(){
+
+            /*Intent calendarIntent = new Intent(Intent.ACTION_INSERT, CalendarContract.Events.CONTENT_URI);
+            Calendar beginTime = Calendar.getInstance().set(2012, 0, 19, 7, 30);
+            Calendar endTime = Calendar.getInstance().set(2012, 0, 19, 10, 30);
+            calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis());
+            calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis());
+            calendarIntent.putExtra(CalendarContract.Events.TITLE, "Ninja class");
+            calendarIntent.putExtra(CalendarContract.Events.EVENT_LOCATION, "Secret dojo");
+*/
+        }
+public void sendEmail(){
+
+    Intent emailIntent = new Intent(Intent.ACTION_SEND);
+// The intent does not have a URI, so declare the "text/plain" MIME type
+    emailIntent.setType("text/plain");
+    emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"jon@example.com"}); // recipients
+    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Email subject");
+    emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message text");
+    PackageManager packageManager = getPackageManager();
+    List activities = packageManager.queryIntentActivities(emailIntent,
+            PackageManager.MATCH_DEFAULT_ONLY);
+    boolean isIntentSafe = activities.size() > 0;
+    String title = getResources().getString(R.string.choose_title);
+// Create intent to show chooser
+    Intent chooser = Intent.createChooser(emailIntent, title);
+
+// Verify the intent will resolve to at least one activity
+    if (emailIntent.resolveActivity(getPackageManager()) != null) {
+        startActivity(chooser);
+    }
+    //startActivity(emailIntent);
+}
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         mlocationRequest = LocationRequest.create();
